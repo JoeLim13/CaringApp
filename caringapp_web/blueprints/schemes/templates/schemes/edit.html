@@ -1,0 +1,18 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<h1>Edit Activities</h1>
+<form action="{{ url_for('schemes.update', id=activity.id)}}" method="POST">
+    <label>New Activity: </label>
+    <input type="text" name="activity" value="{{activity.task}}"/>
+
+    <label>New Date to be completed:</label>
+    <input type="date" name="date" value="{{activity.completion_date}}"/>
+
+    <label class="checkbox"></label>
+    <input type="checkbox" name="completed" {{ 'checked' if activity.is_completed }}> Completed?
+
+    <input type="submit"/>
+</form>
+
+{% endblock %}

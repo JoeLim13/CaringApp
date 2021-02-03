@@ -1,0 +1,67 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+  <h1>This is {{user.username}}'s Profile</h1>
+  <button onclick="toggleClock()" id="clockButton">Hide Incompleted Activities</button>
+
+  <ul>
+    <h5>{{user.username}}</h5>
+    {% for activity in user.activities %}
+    <div class="row" display="flex">
+      {% if activity.is_completed %}
+        <div class="column">
+          <li>Name of the Task: {{activity.task}}</li>
+          <li>To be completed by: {{activity.completion_date}}</li>
+          <li>Completed : {{activity.is_completed}}</li>
+          <form action="{{ url_for('schemes.destroy', id=activity.id)}}" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <a class="btn btn-sm btn-outline-secondary" href="{{url_for('schemes.edit',id=activity.id)}}">Edit Activity</a>
+          <br>
+        </div>
+      {% else %}
+        <div class="column" id="incompleted">
+          <li>Name of the Task: {{activity.task}}</li>
+          <li>To be completed by: {{activity.completion_date}}</li>
+          <li>Completed : {{activity.is_completed}}</li>
+          <form action="{{ url_for('schemes.destroy', id=activity.id)}}" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <a class="btn btn-sm btn-outline-secondary" href="{{url_for('schemes.edit',id=activity.id)}}">Edit Activity</a>
+          <br>
+        </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </ul>
+
+  <script type="text/javascript">
+
+  function toggleClock() {
+    // get the clock
+    var myClock = document.getElementById('incompleted');
+
+    // get the current value of the clock's display property
+    var displaySetting = myClock.style.display;
+
+    // also get the clock button, so we can change what it says
+    var clockButton = document.getElementById('clockButton');
+
+    // now toggle the clock and the button text, depending on current state
+    if (displaySetting == 'block') {
+      // clock is visible. hide it
+      myClock.style.display = 'none';
+      // change button text
+      clockButton.innerHTML = 'Show All Activities';
+    }
+    else {
+      // clock is hidden. show it
+      myClock.style.display = 'block';
+      // change button text
+      clockButton.innerHTML = 'Hide Uncompleted Activites';
+    }
+  }
+  
+  </script>
+
+{% endblock %}

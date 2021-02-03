@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-
+from flask import Blueprint, render_template, flash, redirect, url_for, request
+from models.user import User
 
 users_blueprint = Blueprint('users',
                             __name__,
@@ -18,7 +18,12 @@ def create():
 
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):
-    pass
+    user = User.get_or_none(User.username == username)
+    if user:
+        return render_template("users/show.html", user=user)
+    else:
+        flash("No User Found")
+        return redirect(url_for('home'))
 
 
 @users_blueprint.route('/', methods=["GET"])
