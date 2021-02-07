@@ -1,0 +1,10 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+  <h1>This is {{user.username}}'s Profile</h1>
+  <img src="{{user.full_image_path}}" class="img-thumbnail rounded-circle" width="200"/>
+  {% if current_user.id == user.id %}
+  <a class="btn btn-sm btn-outline-secondary" href="{{url_for('users.edit',id=user.id)}}">Edit Profile</a>
+  {% endif %}
+
+{% endblock %}
