@@ -7,6 +7,14 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = os.environ.get(
         'SECRET_KEY') or os.urandom(32)
+    S3_BUCKET = os.environ.get("S3_BUCKET_NAME")
+    S3_KEY = os.environ.get("S3_ACCESS_KEY")
+    S3_SECRET = os.environ.get("S3_SECRET_ACCESS_KEY")
+    S3_LOCATION = 'http://{}.s3.amazonaws.com/'.format(S3_BUCKET)
+
+    G_CLIENT_ID = os.environ.get("OAUTH_ID")
+    G_CLIENT_SECRET = os.environ.get("OAUTH_KEY")
+
 
 
 class ProductionConfig(Config):
