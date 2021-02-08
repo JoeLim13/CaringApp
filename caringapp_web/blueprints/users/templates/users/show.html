@@ -1,7 +1,11 @@
 {% extends "_layout.html" %}
 {% block content %}
 
-  <h1>This is {{user.username}}'s Profile</h1>
+<h1>This is {{user.username}}'s Profile</h1>
+<img src="{{user.full_image_path}}" class="img-thumbnail rounded-circle" width="200"/>
+{% if current_user.id == user.id %}
+  <a class="btn btn-sm btn-outline-secondary" href="{{url_for('users.edit',id=user.id)}}">Edit Profile</a>
+{% endif %}
   <button onclick="toggleClock()" id="clockButton">Hide Incompleted Activities</button>
 
   <ul>
@@ -14,6 +18,7 @@
           <li>To be completed by: {{activity.completion_date}}</li>
           <li>Completed : {{activity.is_completed}}</li>
           <form action="{{ url_for('schemes.destroy', id=activity.id)}}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
           <a class="btn btn-sm btn-outline-secondary" href="{{url_for('schemes.edit',id=activity.id)}}">Edit Activity</a>
@@ -25,6 +30,7 @@
           <li>To be completed by: {{activity.completion_date}}</li>
           <li>Completed : {{activity.is_completed}}</li>
           <form action="{{ url_for('schemes.destroy', id=activity.id)}}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
           <a class="btn btn-sm btn-outline-secondary" href="{{url_for('schemes.edit',id=activity.id)}}">Edit Activity</a>
@@ -65,3 +71,4 @@
   </script>
 
 {% endblock %}
+

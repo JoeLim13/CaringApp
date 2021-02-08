@@ -1,0 +1,31 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1>Edit Your Profile</h1>
+<form action="{{url_for('users.update', id=user.id)}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <label>New username: </label>
+    <input type="text" name="username" value="{{user.username}}" />
+
+    <label>New email: </label>
+    <input type="email" name="email" value="{{user.email}}" />
+
+    <label>New Password: </label>
+    <input type="password" name="password"  />
+
+    <input type="submit" />
+
+</form>
+
+<h2>Upload Avatar</h2>
+<form action="{{url_for('users.upload', id = user.id)}}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+    <label for="profile_image">Upload Your Avatar</label>
+    <br></br>
+    <input type="file" name="profile_image">
+    <br></br>
+    <button type="submit">Upload</button>
+
+</form>
+
+{% endblock %}

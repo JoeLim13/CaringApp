@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from models.activity import Activity
 from models.user import User
+from flask_login import login_required, login_user, current_user
 
 schemes_blueprint = Blueprint('schemes',
                             __name__,
@@ -12,10 +13,11 @@ def new():
     return render_template('schemes/new.html')
 
 @schemes_blueprint.route('/', methods=['POST'])
+@login_required
 def create():
     print("HELLO")
-    current_user = User.get_or_none(User.username == 'ironrock')
-    if current_user:
+    user = User.get_by_id(current_user.id)
+    if user:
         new_activity = Activity(task=request.form['activity'],
                     completion_date=request.form['date'],
                     user = current_user.id)
@@ -30,9 +32,10 @@ def create():
         return redirect(url_for('home'))
 
 @schemes_blueprint.route('/<int:id>/delete', methods=['POST'])
+@login_required
 def destroy(id):
-    current_user = User.get_or_none(User.username == 'ironrock')
-    if current_user:
+    user = User.get_by_id(current_user.id)
+    if user:
         activity = Activity.get_by_id(id)
         if activity.delete_instance(recursive=True):
             flash("Successfully deleted activity!")
@@ -45,9 +48,10 @@ def destroy(id):
         return redirect(url_for('home'))
 
 @schemes_blueprint.route('/<int:id>/edit', methods=['GET'])
+@login_required
 def edit(id):
-    current_user = User.get_or_none(User.username == 'ironrock')
-    if current_user:
+    user = User.get_by_id(current_user.id)
+    if user:
         activity = Activity.get_or_none(Activity.id== id)
         if activity:
             if activity.id == int(id):
@@ -63,9 +67,10 @@ def edit(id):
         return redirect(url_for("home"))
 
 @schemes_blueprint.route('/<int:id>/update', methods=['POST'])
+@login_required
 def update(id):
-    current_user = User.get_or_none(User.username == 'ironrock')
-    if current_user:
+    user = User.get_by_id(current_user.id)
+    if user:
         activity = Activity.get_or_none(Activity.id== id)
         if activity:
             if activity.id == int(id):

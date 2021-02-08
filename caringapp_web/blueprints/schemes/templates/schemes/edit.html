@@ -3,6 +3,7 @@
 
 <h1>Edit Activities</h1>
 <form action="{{ url_for('schemes.update', id=activity.id)}}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <label>New Activity: </label>
     <input type="text" name="activity" value="{{activity.task}}"/>
 

@@ -19,7 +19,7 @@
 
     <title>
       {% block title %}
-      {% endblock %} CARINGAPP
+      {% endblock %}CARINGAPP
     </title>
 
   </head>
@@ -31,6 +31,8 @@
       {% endfor %}
     </ul>
     {% endif %} {% endwith %}    
+    {%include 'nav.html' %}
+
     {% block content %}
     {% endblock %}
   </body>

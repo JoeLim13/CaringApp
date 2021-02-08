@@ -2,14 +2,17 @@ from flask import Blueprint, request, jsonify, abort
 from models.user import User
 from models.activity import Activity
 from datetime import date
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 schemes_api_blueprint = Blueprint('schemes_api',
                              __name__,
                              template_folder='templates')
 
 @schemes_api_blueprint.route('/', methods=['POST'])
+@jwt_required
 def create():
-    current_user = User.get_or_none(User.username == 'ironrock')
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id == user_id)
     if current_user: 
         params = request.json
         new_activity = Activity(task=params.get('activity'),
@@ -23,8 +26,10 @@ def create():
         return jsonify({"message": "No such user"})
 
 @schemes_api_blueprint.route('/<int:id>/delete', methods=['POST'])
+@jwt_required
 def destroy(id):
-    current_user = User.get_or_none(User.username == 'ironrock')
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id == user_id)
     if current_user:
         activity = Activity.get_by_id(id)
         if activity.delete_instance(recursive=True):
@@ -35,14 +40,16 @@ def destroy(id):
         return jsonify({"message": "No such user"})
 
 @schemes_api_blueprint.route('/<int:id>/edit')
+@jwt_required
 def edit(id):
-    user = User.get_or_none(User.username == 'ironrock')
-    if user:
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id == user_id)
+    if current_user:
         activity = Activity.get_or_none(Activity.id== id)
         if activity:
             return jsonify({
-                "username": user.username,
-                "email": user.email,
+                "username": current_user.username,
+                "email": current_user.email,
                 "tasks": [
                     activity.task 
                 ],
@@ -58,8 +65,10 @@ def edit(id):
         return jsonify({"message": "No such user"})
 
 @schemes_api_blueprint.route('/<int:id>/update', methods=['POST'])
+@jwt_required
 def update(id):
-    current_user = User.get_or_none(User.username == 'ironrock')
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id == user_id)
     if current_user:
         activity = Activity.get_or_none(Activity.id== id)
         if activity:
