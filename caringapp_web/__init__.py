@@ -4,6 +4,7 @@ from caringapp_web.blueprints.users.views import users_blueprint
 from caringapp_web.blueprints.schemes.views import schemes_blueprint
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
+from datetime import time, date
 
 assets = Environment(app)
 assets.register(bundles)
@@ -20,10 +21,6 @@ def internal_server_error(e):
 def home():
     return render_template('home.html')
 
-def scheduledTask():
-    print("Hello")
-    
-  
-job = scheduler.add_job(scheduledTask, 'interval', minutes=1)
-job.start(paused=False)
-
+# @scheduler.task('interval', id='do_job_1', seconds=5)
+# def job1():
+#    print('Job 1 executed')

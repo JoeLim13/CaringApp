@@ -1,0 +1,16 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<h1>{{user.username}}'s Dashboard</h1>
+{% for dailyrecord in dailyrecords %}
+<ul>
+    <li>
+        {{dailyrecord.title}}
+    </li>
+    <li>
+        {{dailyrecord.completion_rate}}
+    </li>
+</ul>
+{% endfor %}
+
+{% endblock %}

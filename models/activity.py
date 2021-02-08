@@ -12,6 +12,7 @@ class Activity(BaseModel):
     user = pw.ForeignKeyField(User, backref="activities", on_delete="CASCADE")
     
     
+    
     def validate(self):
         #Completion Date cannot be earlier than current day
         current_day = date.today()
@@ -19,6 +20,10 @@ class Activity(BaseModel):
         previous_day = Activity.select(Activity.completion_date).where(key_in_date < current_day)
         if previous_day:
             self.errors.append('Cannot enter previous day')
+    
+            
+            
+        
 
         
         

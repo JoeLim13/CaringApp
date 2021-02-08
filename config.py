@@ -13,7 +13,6 @@ class ProductionConfig(Config):
     DEBUG = False
     ASSETS_DEBUG = False
 
-
 class StagingConfig(Config):
     DEVELOPMENT = False
     DEBUG = False
