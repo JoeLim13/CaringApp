@@ -10,7 +10,7 @@ sessions_api_blueprint = Blueprint('sessions_api',
 @sessions_api_blueprint.route('/', methods = ['POST'])
 def create():
     params = request.json
-    user = User.get_or_none(User.email == params.get("email"))
+    user = User.get_or_none(User.username == params.get("username"))
     if user and check_password_hash(user.password_hash, params.get("password")):
         token = create_access_token(identity = user.id)
         return jsonify({"token": token})
