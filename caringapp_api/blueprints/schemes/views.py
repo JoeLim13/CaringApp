@@ -48,17 +48,14 @@ def edit(id):
         activity = Activity.get_or_none(Activity.id== id)
         if activity:
             return jsonify({
+                "user_id": current_user.id,
                 "username": current_user.username,
                 "email": current_user.email,
-                "tasks": [
-                    activity.task 
-                ],
-                "completion_date": [
-                    activity.completion_date 
-                ],
-                "is_completed": [
-                    activity.is_completed
-                ]})
+                "activity_id": activity.id,
+                "task": activity.task,
+                "completion_date": activity.completion_date,
+                "is_completed": activity.is_completed
+                })
         else:
             return jsonify({"message": "No such activity"})
     else:

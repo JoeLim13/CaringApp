@@ -14,7 +14,7 @@ def upload_file_to_s3(file, username , acl="public-read"):
         s3.upload_fileobj(
             file,
             app.config.get("S3_BUCKET"),
-            "{}{}".format(username,file.filename),
+            "{}/{}".format(username,file.filename),
             ExtraArgs={
                 "ACL": acl,
                 "ContentType": file.content_type
@@ -25,4 +25,4 @@ def upload_file_to_s3(file, username , acl="public-read"):
         print("Something Happened: ", e)
         return e
 
-    return "{}{}".format(username, file.filename)
+    return "{}/{}".format(username, file.filename)

@@ -1,4 +1,4 @@
-from app import app, scheduler
+from app import app
 from flask import render_template
 from caringapp_web.blueprints.users.views import users_blueprint
 from caringapp_web.blueprints.schemes.views import schemes_blueprint
