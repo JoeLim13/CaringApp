@@ -12,7 +12,7 @@ scheduler = APScheduler()
 # def job1():
 #     print('Job 1 executed')
 
-@scheduler.task('cron', id='do_backgroundjob', hour='16', minute='29', second='0')
+@scheduler.task('cron', id='do_backgroundjob', hour='09', minute='10', second='0')
 def backgroundjob():
     all_user = User.select()
     for user in all_user:
