@@ -8,6 +8,7 @@ from caringapp_api.blueprints.users.views import users_api_blueprint
 from caringapp_api.blueprints.schemes.views import schemes_api_blueprint
 from caringapp_api.blueprints.sessions.views import sessions_api_blueprint
 
+
 csrf.exempt(users_api_blueprint)
 csrf.exempt(sessions_api_blueprint)
 csrf.exempt(schemes_api_blueprint)
