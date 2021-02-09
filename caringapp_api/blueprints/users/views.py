@@ -35,7 +35,7 @@ def show(username):
                     "user_id": user.id,
                     "username": user.username,
                     "email": user.email,
-                    "profileImage": app.config.get("S3_LOCATION") + user.image_path,
+                    "profileImage": user.full_image_path,
                     "activity": [{
                         "activity_id": activity.id,
                         "tasks": activity.task,
@@ -58,7 +58,7 @@ def edit(id):
             "id": user.id,
             "username": user.username,
             "email": user.email,
-            "profileImage": app.config.get("S3_LOCATION") + user.image_path
+            "profileImage": user.full_image_path
             }
         )
     else:
@@ -123,7 +123,7 @@ def upload_image():
             user.image_path = image_path
 
             if user.save():
-                return jsonify({"messages" : "Uploaded successfully", "profileImage" : app.config.get("S3_LOCATION") + user.image_path}) 
+                return jsonify({"messages" : "Uploaded successfully", "profileImage" : user.full_image_path}) 
             else:
                 return jsonify({"messages" : "Error occured during uploading"})  
         else: 
